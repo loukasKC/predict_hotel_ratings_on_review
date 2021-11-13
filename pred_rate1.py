@@ -365,8 +365,7 @@ def app():
 
         st.markdown('#')
         st.markdown("__Before the operationalization__:")
-        image = Image.open("/Material/Images/tfidfbefore.png")
-        st.image(image, width=800)
+        st.image("Material/Images/tfidfbefore.png", width=800)
         st.markdown("__After the operationalization__:")
         st.image("Material/Images/tfidfafter.png", width=800)
 
