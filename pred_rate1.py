@@ -365,9 +365,8 @@ def app():
 
         st.markdown('#')
         st.markdown("__Before the operationalization__:")
-        path = os.path.dirname(__file__)
-        my_file = path+'/Material/Images/tfidfbefore.png'
-        st.image(my_file, width=800)
+        image = Image.open("/Material/Images/tfidfbefore.png")
+        st.image(image, width=800)
         st.markdown("__After the operationalization__:")
         st.image("Material/Images/tfidfafter.png", width=800)
 
