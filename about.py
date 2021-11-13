@@ -11,6 +11,7 @@ import joblib
 #imports for NLP
 import spacy
 import nltk
+nltk.download('stopwords')
 from nltk.corpus import stopwords
 import string
 
