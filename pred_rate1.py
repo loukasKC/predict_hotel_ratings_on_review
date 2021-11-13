@@ -365,9 +365,9 @@ def app():
 
         st.markdown('#')
         st.markdown("__Before the operationalization__:")
-        st.image("Material/Images/tfidfbefore.png", width=800)
+        st.image("Material/Images/tfidfbefore.PNG", width=800)
         st.markdown("__After the operationalization__:")
-        st.image("Material/Images/tfidfafter.png", width=800)
+        st.image("Material/Images/tfidfafter.PNG", width=800)
 
     tfidf = TfidfVectorizer(lowercase=True, strip_accents="ascii", analyzer='word', stop_words='english', ngram_range=(1, 2), max_df=0.95, min_df=5, sublinear_tf=True)#, ,
 
@@ -392,7 +392,7 @@ def app():
         - class weight (automatically adjust weights inversely proportional to class frequencies): balanced
         - C (how much you want to avoid misclassifying each training example): 1
         """)
-        st.image("Material/Images/linear_c.png", width=800)
+        st.image("Material/Images/linear_c.PNG", width=800)
         st.caption("No need to change the default value")
         #error = []
         #for i in range(1, 40):
@@ -451,7 +451,7 @@ def app():
         __Operationalization:__\n
         - alpha (learning parameter): 1
         """)
-        st.image("Material/Images/mord_alpha.png", width=800)
+        st.image("Material/Images/mord_alpha.PNG", width=800)
         st.caption("No need to change the default value")
     #error = []
     #for i in range(1, 20):
@@ -485,9 +485,9 @@ def app():
         - n_neighbors (number of neighbors to use): 5 (default)
         - leaf_size (weight function used in prediction): 30 (default)
         """)
-        st.image("Material/Images/knn_neighbors.png", width=800)
+        st.image("Material/Images/knn_neighbors.PNG", width=800)
         st.caption("Optimal n-neighbors number: 21")
-        st.image("Material/Images/knn_leaf.png", width=800)
+        st.image("Material/Images/knn_leaf.PNG", width=800)
         st.caption("No change in leaf size number")
         #error = []
         #for i in range(0, 50):
