@@ -46,6 +46,8 @@ import joblib
 import seaborn as sns
 from yellowbrick.classifier import ClassPredictionError
 
+import gc
+
 #method for adjusting the wordcloud layout
 def black_color_func(word, font_size, position, orientation, random_state=None, **kwargs):
     return("hsl(0,100%, 1%)")
@@ -153,7 +155,13 @@ def cleanData(reviews):
     #return df_cleaned['clean_reviews']
     return df_cleaned
 
+
 def app():
+
+    #Enable garbage collection
+    gc.enable()
+    #Clean up the memory from unused objects
+    gc.collect()
 
     #empty dataframe to insert the dataset (arrived by any way)
     df = pd.DataFrame()
