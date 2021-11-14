@@ -434,7 +434,7 @@ def app():
                     wordcloud_col1, wordcloud_col2 = st.columns(2)
                     wordcloud1 = WordCloud(
                                     scale=3,relative_scaling=1,width=7000,height=7000,
-                                    max_words=500,colormap='RdYlGn',collocations=False,
+                                    max_words=50,colormap='RdYlGn',collocations=False,
                                     background_color='white',contour_color='white',).generate(' '.join(df_official['Review']))#the join function returns a text
                     wordcloud1.recolor(color_func = black_color_func)
                     plt.imshow(wordcloud1, interpolation='bilinear')
@@ -445,7 +445,7 @@ def app():
 
                     wordcloud2 = WordCloud(
                                     scale=3,relative_scaling=1,width=7000,height=7000,
-                                    max_words=500,colormap='RdYlGn',collocations=False,
+                                    max_words=50,colormap='RdYlGn',collocations=False,
                                     background_color='white',contour_color='white',).generate(' '.join(dfinal['Review']))#the join function returns a text
                     wordcloud2.recolor(color_func = black_color_func)
                     plt.imshow(wordcloud2, interpolation='bilinear')
