@@ -118,9 +118,9 @@ def cleanData(reviews):
 def app():
 
     st.subheader("Test our trained model!")
-    st.markdown("""Provide a review about a hotel (in text form) and check the predicted rating.
+    st.markdown("""Provide a review about a hotel (in text form) and check the predicted rating ranging from 1 (being really bad) to 5 (being really good).
     Our trained model is based on the __Logistic Regression__ algorithm. This method applies the "one-vs-the-rest" multi-class strategy function to perform classification.
-    The objective of this algorithm is to fit to the input, training data and return a "best fit" hyperplane that classifies them. Next step, the test data is provided to the classifier, to check what the "predicted" class is. """)
+    """)
     user_input = st.text_area("Enter your review", "")
     submit_text = st.button('Submit Review')
 
