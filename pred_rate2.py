@@ -167,17 +167,9 @@ def app():
     df = pd.DataFrame()
 
     st.title("Rating prediction (dynamic)")
-    st.header("Assignment description")
-    st.markdown("""The current web app has been developed for the needs of the course: __*CEI 523 Data Science*__.
-    \n Our team (Group 3) was responsible for developing a model which can predict the rating of a hotel based on a user review (text)
-    \n In this web-page we present, step-by-step, our process for finding the best model.
-    \n In this case, we utilize an unknown file which is added by you, the user!
-    \n This file needs to have at least two columns: a column that contains users' comments on a hotel and another column with
-    \n the respective rating (with any range).
-    """)
 
     st.header("Step 1: Import your dataset")
-    option = st.selectbox('How will you insert your dataset:', ('Upload a CSV/XLSX file', 'Use an API link', 'Test with Kaggle CSV file'))
+    option = st.selectbox('How will you insert your dataset:', ('Upload a CSV/XLSX file', 'Use an API link', 'Test with Kaggle CSV file (demonstration)'))
 
     if option == 'Upload a CSV/XLSX file':
         uploaded_file = st.file_uploader("Choose a file")
@@ -189,7 +181,7 @@ def app():
                 df = pd.read_csv(uploaded_file)
                 st.write(".csv")
 
-    elif option == 'Test with Kaggle CSV file':
+    elif option == 'Test with Kaggle CSV file (demonstration)':
         df = pd.read_csv("Material/Data/data_2.csv", sep=',',)
 
     elif option == 'Use an API link':
@@ -306,6 +298,8 @@ def app():
                 slideCol3.markdown("__New Rating distribution__")
                 slideCol3.write(df_official['Rating'].value_counts())
 
+                st.markdown("#")
+
                 st.markdown("__Missing Values__")
                 st.write("Missing values for Review: " + str(df_official['Review'].isna().sum()))
 
@@ -330,9 +324,9 @@ def app():
                     st.session_state['mode'] = st.selectbox('Select mode', mode_list)
                     mode = st.session_state['mode']
 
+                st.write("Mode: ", mode)
                 st.write("Median: " +str(median))
                 st.write("Mean: " + str(mean))
-                st.write("Mode: ", mode)
 
                 if 'mode' not in st.session_state:
                     st.session_state['mode'] = -1
@@ -384,8 +378,6 @@ def app():
                 applyModels = st.button('Apply Models', key="applymodels")
 
                 if(applyModels):
-
-                    st.write(df_official.describe())
 
                     st.markdown('#')
 
@@ -490,8 +482,6 @@ def app():
                     X_train_vectorized = loaded_tfidf.fit_transform(X_train)
                     X_test_vectorized = loaded_tfidf.transform(X_test)
 
-                    st.write("Number of unique words for training:", X_train_vectorized.shape)
-                    st.write("Number of unique words for testing:", X_test_vectorized.shape)
                     labels=[1,2,3,4,5]
 
                     st.subheader("Multi-Classification Algorithm: Linear Support Vector Clustering")

@@ -158,13 +158,13 @@ def app():
     #empty dataframe to store the csv
     df = pd.DataFrame()
 
-    st.title("Rating prediction (file)")
+    st.title("Rating prediction (static)")
 
     st.subheader("Introduction")
     with st.expander('Show More'):
         st.markdown("""
-        For solving this predictive modeling problem (develop a model using historical data, for making a prediction on new unknown data) and finding the best
-        function approximation (__Y = f(X)+ C__), we decided to go with the classification route. [[source]](https://builtin.com/data-science/supervised-learning-python) Classification predictive modeling attempts to predict categorical class labels, that are discrete and unordered. [[here]](https://machinelearningmastery.com/classification-versus-regression-in-machine-learning/)\n
+        For solving this predictive modeling problem (develop a model using historical data, for making a prediction on new unknown data and finding the best
+        function approximation __Y = f(X)+ C__), we decided to go with the classification route. [[source]](https://builtin.com/data-science/supervised-learning-python) Classification predictive modeling attempts to predict categorical class labels, that are discrete and unordered. [[here]](https://machinelearningmastery.com/classification-versus-regression-in-machine-learning/)\n
         As seen below, the labels for prediction are limited and discrete, ranging from 1 star (very negative) to 5 stars (very positive). We can treat each number as a separate, unique class and therefore, treat this as a classification task. [[here]](https://towardsdatascience.com/1-to-5-star-ratings-classification-or-regression-b0462708a4df)\n
 
         However, we need to highlight the fact that each category is an integer value (1 corresponds to the first class, 2 to the second class and so on) and there's no need for integer encoding.
@@ -177,17 +177,16 @@ def app():
     with st.expander('Show More'):
         st.markdown("""
         The CSV file is opened and stored as a dataframe. As seen below, it has two columns:\n
-        __Review:__ and __Rating__""")
+        __Review__ and __Rating__""")
         st.write(df.head(4))
 
     st.subheader("Step 2: Clean & transform the data")
     with st.expander('Show More'):
         st.markdown("""
-        The data cleaning and transformation process is the following:
-
+        The data cleaning and transformation process is the following:\n
             1. Check for duplicates (two conditions)
                 a. Duplicated rows for both columns (same Review & Rating rows)
-                b. Duplicated rows for Review column (possible case of rows with same Review but different Rating). In this case, we need to keep only one row\n
+                b. Duplicated rows for Review column (same Review but different Rating). We need to keep only one row\n
             2. Check the structure of columns
                 a. Review column needs to be an object (mixed numeric & non-numeric values)
                 b. Rating column needs to be an integer64 (integer values from 1 to 5)\n
@@ -226,7 +225,7 @@ def app():
     df.info(buf=buffer)
     s = buffer.getvalue()
     st.text(s)
-    st.caption("Verified column types")
+    st.caption("Verified column types (Review is object & Rating is int64)")
 
     st.markdown('#')
 
@@ -297,7 +296,7 @@ def app():
     y = dfinal['Rating'].copy()
 
     #compare words from old df (raw text) and new df (cleaned text)
-    st.markdown("__For resource purposes, we already the cleaned text is loaded from a CSV file__")
+    st.markdown("__For resource purposes, we already cleaned the Rating column and we load it from a CSV file__")
     reviewHead_col1, reviewHead_col2 = st.columns(2)
     reviewHead_col1.markdown("__Review before cleaning__")
     reviewHead_col1.write(df['Review'].head(4))
@@ -333,6 +332,7 @@ def app():
     st.set_option('deprecation.showPyplotGlobalUse', False)
     wordcloud_col2.pyplot()
 
+    st.markdown('#')
     top10_col1, top10_col2 = st.columns(2)
 
     top10_col1.markdown("__Top 10 words before cleaning__")
@@ -354,13 +354,14 @@ def app():
     st.subheader("Step 3: Apply Models")
     with st.expander('Show More'):
         st.markdown("""
-        __Text Vectorization:__\n Before looking at the models, it is important to convert the text data into numeric data (numerical feature vectors)\n. Since, computers can only understand numbers and not text,\n with this conversion,
-        our machine learning models will be able to leverage linear algebra and capture potential patterns of the words\n and proceed with the rating prediction.\n In this assignment, we are employing the __Tfidfvectorizer__.\n\n__Tfidfvectorizer__:  a method for converting textual data into vectors, since models can process only numerical data. TfidfVectorizer does three steps at once:\n -   Counts the term frequency (TF), limits vocabulary size, removes stopwords\n -   Computes the IDF (Inverse Document Frequency) values of the words, based on their appearance in each document (the lower the IDF value, the less unique it is to any document)\n -   Computes the TFIDF scores by multiplying the TF with the IDF. Some words appear frequently in one document and less in other documents and are treated as more insightful by this method (common words are penalized)\n In our case, based on experimentation and testing, we decided on the following TfidfVectorizer parameters:
+        __Text Vectorization:__\n Before looking at the models, it is important to convert the text data into numeric data (numerical feature vectors)\n. Since computers can only understand numbers and not text,\n with this conversion,
+        our machine learning models will be able to leverage linear algebra and capture potential patterns of the words\n and proceed with the rating prediction.\n In this assignment, we are employing the __Tfidfvectorizer__.\n\n__Tfidfvectorizer__:  a method for converting textual data into vectors, since models can process only numerical data. TfidfVectorizer does three steps at once:\n -   Counts the term frequency (TF), limits vocabulary size, removes stopwords\n -   Computes the IDF (Inverse Document Frequency) values of the words, based on their appearance in each document (the lower the IDF value, the less unique it is to any document)\n -   Computes the TFIDF scores by multiplying the TF with the IDF. Some words appear frequently in one document and less in other documents and are treated as more insightful by this method (common words are penalized)\n. In our case, based on experimentation and testing, we decided on the following TfidfVectorizer parameters:
+        \n\n
         -   stop_words = english - (removal of most common words by sklearn)
         -   ngram_range = (1, 2) - (take phrases between 1/unigrams and 2 words/bigrams)
         -   max_df = 0.95 -(ignore phrases that are in 95% of reviews)
         -   min_df = 5 - (ignore phrases that are in fewer than 5 reviews)
-        -   sublinear_tf - True (replaces term frequency with log(term frequency), normalises bias against lengthy vs short docs)
+        -   sublinear_tf - True (replaces term frequency with log of term frequency,\n normalises bias against lengthy vs short docs)
         """)
 
         st.markdown('#')
@@ -385,7 +386,8 @@ def app():
     with st.expander('Show More'):
         st.markdown("""
          LinearSVC algorithm implements the "one-vs-the-rest" multi-class strategy and trains n_class models.
-         Moreover, it performs well on on range of text classification tasks.
+         Moreover, it performs well on on range of natural language processing based text classification tasks.
+         One of the default parameters is the usage of the "ovr" strategy (involves splitting the multi-class dataset into multiple binary classification problems and then, the classifier is trained on each binary classification problem).
         [[source]](https://www.tutorialspoint.com/scikit_learn/scikit_learn_support_vector_machines.htm)
         [[source]](https://medium.com/@manoveg/multi-class-text-classification-with-probability-prediction-for-each-class-using-linearsvc-in-289189fbb100)\n
         __Operationalization:__\n
@@ -416,6 +418,8 @@ def app():
     with st.expander('Show More'):
         st.markdown("""
         A discriminative classification model that uses the one-vs-rest heuristic method, to find the label (splits multi-class dataset into a multiple binary classification problem).
+        It's a simple, interpretable algorithm that does not assume that the features are conditionally independent.
+        [[source]](https://lena-voita.github.io/nlp_course/text_classification.html)
         [[source]](https://www.mastersindatascience.org/learning/introduction-to-machine-learning-algorithms/logistic-regression)
         [[source]](https://www.tutorialspoint.com/scikit_learn/scikit_learn_support_vector_machines.htm)\n
         __Operationalization:__\n
@@ -445,7 +449,7 @@ def app():
     with st.expander('Show More'):
         st.markdown("""
         mord is a Python package that implements Ordinal Regression methods, based on the scikit-learn API.
-        This package can be used extensively, in cases where the goal is to predict a discrete and ordered label.
+        This package can be used extensively, in cases where the goal is to predict a discrete and ordered label (e.g., predicting a movie rating from 1 to 5).
         In our case, we are employing the __LogisticIT__, a classifier which implements the ordinal logistic model.
         [[source]](https://pythonhosted.org/mord/reference.html#mord.MulticlassLogistic)\n
         __Operationalization:__\n
@@ -476,9 +480,10 @@ def app():
     with st.expander('Show More'):
         st.markdown("""
          KNN (k-nearest neighbors) is a simple classification algorithm that does not depend on the structure of the data.
-         Classifies a new example by measuring the distance between its k nearest n_neighbors
+         It classifies a new example by measuring the distance between its k nearest n_neighbors.
          The distance between two examples can be the euclidean distance between their feature vectors.
          The majority class among the k nearest neighbors is taken as the class for the new/given example.
+         Lastly, KNN is another algorithm popular with text classification,
         [[source]](https://www.geeksforgeeks.org/multiclass-classification-using-scikit-learn/)
         [[source]](https://www.datacamp.com/community/tutorials/k-nearest-neighbor-classification-scikit-learn)\n
         __Operationalization:__\n
@@ -525,7 +530,7 @@ def app():
     with st.expander('Show More'):
         st.markdown("""
         - Precision: how precise/accurate the models are (out of predicted positive, how many are actual positive)
-        - Recall: how many of the actual positives, the models capture through labeling it as positive
+        - Recall: how many of the actual positives, the models capture through labeling them as positive
         - F1: balance between Precision and Recall
         """)
 
@@ -668,7 +673,7 @@ def app():
 
     col1explanation.markdown("""
     Examine the spread of the accuracy scores, across each cross validation fold for each algorithm:
-    A 10-fold cross validation procedure, used to evaluate each algorithm.
+    A 10-fold cross validation procedure is used to evaluate each algorithm.
     This procedure is configured with the same random seed to ensure that the same splits to the training data are
     performed and that each algorithm is evaluated in the exact same way.
     [[source]](https://machinelearningmastery.com/compare-machine-learning-algorithms-python-scikit-learn/)
@@ -686,7 +691,7 @@ def app():
 
     st.markdown('#')
 
-    st.subheader("Some examples:")
+    st.subheader("Some predictions based on other dataset reviews:")
     examplecol1, examplecol2, examplecol3 = st.columns(3)
 
     examplecol1.markdown("""
@@ -734,25 +739,23 @@ def app():
 
     st.subheader("What about other studies?")
 
-    st.markdown("""
+    otherStudy1, otherStudy2, otherStudy3 = st.columns(3)
+
+    otherStudy1.markdown("""
     __Study 1:__ Predict hotel ratings on reviews\n
     __Model:__ Sequential Model\n
     __Accuracy:__ 0.59\n
     __Source:__ [[source]](https://medium.com/analytics-vidhya/predicting-the-ratings-of-reviews-of-a-hotel-using-machine-learning-bd756e6a9b9b)
     """)
 
-    st.markdown('#')
-
-    st.markdown("""
+    otherStudy2.markdown("""
     __Study 2:__ Predict Yelp Stars from Reviews\n
     __Model:__ LinearSVC\n
     __Accuracy:__ 0.62\n
     __Source:__ [[source]](https://www.developintelligence.com/blog/2017/03/predicting-yelp-star-ratings-review-text-python/)
     """)
 
-    st.markdown('#')
-
-    st.markdown("""
+    otherStudy3.markdown("""
     __Study 3:__ Predict Yelp Stars from Reviews (Sentiment Classification: positive/negative)\n
     __Model:__ Logistic Regression\n
     __Accuracy:__ 0.95\n
@@ -764,16 +767,16 @@ def app():
     #Save the models
 
     joblib_model_LinearSVC = "Material/Models/LinearSVC_Model.pkl"
-    joblib.dump(clf, joblib_model_LinearSVC)
+    #joblib.dump(clf, joblib_model_LinearSVC)
 
     joblib_model_LogisticRegression = "Material/Models/LogisticRegression_Model.pkl"
-    joblib.dump(clf_benchmark, joblib_model_LogisticRegression)
+    #joblib.dump(clf_benchmark, joblib_model_LogisticRegression)
 
     joblib_model_LogisticIT = "Material/Models/LogisticIT_Model.pkl"
-    joblib.dump(mordLR, joblib_model_LogisticIT)
+    #joblib.dump(mordLR, joblib_model_LogisticIT)
 
     joblib_model_KNN = "Material/Models/KNN_Model.pkl"
-    joblib.dump(knn_model, joblib_model_KNN)
+    #joblib.dump(knn_model, joblib_model_KNN)
 
     joblib_vectorizer  = "Material/Models/tfidfvectorizer.pkl"
-    joblib.dump(tfidf, joblib_vectorizer)
+    #joblib.dump(tfidf, joblib_vectorizer)

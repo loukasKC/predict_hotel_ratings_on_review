@@ -10,8 +10,8 @@ import streamlit as st
 st.set_page_config(page_title='Rating Prediction App', page_icon=':smiley', layout="wide")
 
 PAGES = {
-    "About the assignment": about,
-    "Rating prediction (file)": pred_rate1,
+    "Test our trained model!": about,
+    "Rating prediction (static)": pred_rate1,
     "Rating prediction (dynamic)": pred_rate2,
 }
 
@@ -27,15 +27,15 @@ page.app()
 
 st.sidebar.header('Assignment Description')
 st.sidebar.markdown("""The current web app has been developed for the needs of the course: __*CEI 523 Data Science*__.
-\n Our team (Group 3/Team 3) was responsible for developing a model which can predict the rating of a hotel based on a user review (text).\n
-In the __"Rating prediction (file)"__ web-page, we present, step-by-step, our process for finding the best model. In this case, we utilize a known file.
-This file has two columns: a "Review" column that contains users' comments on a hotel and another column "Rating" with
+\n Our team __(Group 3/Team 3)__ was responsible for developing a model which can predict the rating of a hotel (number from 1-5), based on a user review (text).\n
+In the __"Rating prediction (static)"__ web-page, we present, step-by-step, our process for finding the best model. In this case, we utilize a known file.
+This file has two columns: a "Review" column that contains users' comments on a hotel and another column "Rating", with
 the respective rating (ranging from 1 to 5).
 \n
 In the __"Rating prediction (dynamic)"__ web-page, we test our models (as developed) with an unknown file, added by you!
-Moreover, you are given the choice to configure the file as you like (e.g., replace unknown values with one of the Central Tendency measures, specify the range of the Rating column, etc.)\n
-The input file needs to have at least two columns: a column that contains users' comments on a hotel and another column with the respective rating (with any range).
-The column with users' comments (reviews) needs to include text (numbers, special characters may be included), while the column with the rating needs to include only numbers.
+Moreover, you are given the choice to configure the file as you like (e.g., replace unknown values with one of the Central Tendency Measures, specify the range of the Rating column, etc.)\n
+Your input file needs to have at least two columns: a column that contains users' comments on a hotel and another column with the respective rating.
+The column with users' comments (reviews) needs to include text (numbers, special characters may be included), while the column with the rating needs to include only integer numbers.
 """)
 
 st.sidebar.markdown("""__Team Members:__ Maria Hlia, Loukas Konstantinou""")
