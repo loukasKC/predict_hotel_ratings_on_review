@@ -169,7 +169,7 @@ def app():
     st.title("Rating prediction (dynamic)")
 
     st.header("Step 1: Import your dataset")
-    option = st.selectbox('How will you insert your dataset:', ('Upload a CSV/XLSX file', 'Use an API link', 'Test with Kaggle CSV file (demonstration)'))
+    option = st.selectbox('How will you insert your dataset:', ('Upload a CSV/XLSX file', 'Use an API link', 'Test with Kaggle CSV file (demo)'))
 
     if option == 'Upload a CSV/XLSX file':
         uploaded_file = st.file_uploader("Choose a file")
@@ -181,7 +181,7 @@ def app():
                 df = pd.read_csv(uploaded_file)
                 st.write(".csv")
 
-    elif option == 'Test with Kaggle CSV file (demonstration)':
+    elif option == 'Test with Kaggle CSV file (demo)':
         df = pd.read_csv("Material/Data/data_2.csv", sep=',',)
 
     elif option == 'Use an API link':
@@ -318,7 +318,7 @@ def app():
                 mode = df_official['Rating'].mode().astype(np.int64)
 
                 if(mode.shape[0]>=1):
-                    mode_list = [1]
+                    mode_list = []
                     for index, value in mode.items():
                         mode_list.append(value)
                     st.session_state['mode'] = st.selectbox('Select mode', mode_list)
@@ -386,6 +386,9 @@ def app():
                     st.markdown("__Produced Dataframe__")
                     st.write(df_official.head())
 
+                    st.markdown("#")
+
+                    st.markdown("__Visualization & Statistics of Rating__")
                     newDataframeCol1, newDataframeCol2, newDataframeCol3 = st.columns(3)
 
                     newDataframeCol2.markdown('')
@@ -423,7 +426,11 @@ def app():
                     reviewHead_col2.markdown("__Review after cleaning__")
                     reviewHead_col2.write(dfinal['Review'].head(4))
 
+                    st.markdown('#')
+
                     wordcloud_col1, wordcloud_col2 = st.columns(2)
+                    wordcloud_col1.markdown("__Top 500 words before cleaning__")
+                    wordcloud_col2.markdown("__Top 500 words after cleaning__")
                     mask = np.array(Image.open('Material/Images/hotel.jpg'))
                     wordcloud1 = WordCloud(
                                     scale=3,relative_scaling=1,width=7000,height=7000,
@@ -508,7 +515,7 @@ def app():
 
                     st.markdown('#')
 
-                    st.subheader("Step 4: Compare Models")
+                    st.subheader("Step 6: Compare Models")
 
                     st.markdown("__Accuracy Score:__ Accuracy based on predicted y and true y (how much the two sets correspond)")
                     accuracyLinear, accuracyRegression = st.columns(2)
@@ -516,7 +523,7 @@ def app():
 
                     accuracyLinear.text("Linear SVC accuracy score: {:.2}".format(accuracy_score(y_test, y_pred)))
                     accuracyRegression.text("Logistic Regression accuracy score: {:.2}".format(accuracy_score(y_test, y_predLR)))
-                    accuracyMode.text("Mord accuracy score: {:.2}".format(accuracy_score(y_test, mord_ypredLR)))
+                    accuracyMode.text("LogisticIT score: {:.2}".format(accuracy_score(y_test, mord_ypredLR)))
                     accuracyKNN.text("KNN accuracy score: {:.2}".format(accuracy_score(y_test, y_predknn)))
 
                     st.markdown('#')
@@ -677,6 +684,5 @@ def app():
                     plt.xticks(ticks=tickvalues,labels=names, rotation = 'horizontal')
                     plt.show()
                     col2graph.pyplot(fig)
-
     else:
         st.write("No dataset imported")

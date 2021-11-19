@@ -2,7 +2,6 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-
 from PIL import Image
 
 #import for loading the models
@@ -17,9 +16,6 @@ import string
 
 #imports to prepare the data for the algorithms
 from sklearn.feature_extraction.text import TfidfVectorizer
-
-#imports for models
-from sklearn.svm import LinearSVC
 
 def cleanData(reviews):
 
@@ -118,8 +114,8 @@ def cleanData(reviews):
 def app():
 
     st.subheader("Test our trained model!")
-    st.markdown("""Provide a review about a hotel (in text form) and check the predicted rating, ranging from 1 (very negative) to 5 (very positive).
-    Our trained model is based on the __Logistic Regression__ algorithm. This method also applies the "one-vs-the-rest" multi-class strategy function to perform the classification.
+    st.markdown("""Provide a review about a hotel and get the predicted rating, on a scale from 1 (very negative) to 5 (very positive).
+    Our trained model is based on the __Logistic Regression__ algorithm. This method applies the "one-vs-the-rest" multi-class strategy function to perform the classification.
     """)
     user_input = st.text_area("Enter your review", "")
     submit_text = st.button('Submit Review')
@@ -145,6 +141,3 @@ def app():
 
         for i in range(value[0],5):
             cols[i].markdown('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <span class="fa fa-star""></span>', unsafe_allow_html=True)
-
-    else:
-        st.write("Please provide a review")

@@ -4,10 +4,9 @@ import pred_rate2
 import about
 
 from PIL import Image
-
 import streamlit as st
 
-st.set_page_config(page_title='Rating Prediction App', page_icon=':smiley', layout="wide")
+st.set_page_config(page_title='Rating Prediction App', page_icon=':hotel', layout="wide")
 
 PAGES = {
     "Test our trained model!": about,

@@ -361,7 +361,7 @@ def app():
         -   ngram_range = (1, 2) - (take phrases between 1/unigrams and 2 words/bigrams)
         -   max_df = 0.95 -(ignore phrases that are in 95% of reviews)
         -   min_df = 5 - (ignore phrases that are in fewer than 5 reviews)
-        -   sublinear_tf - True (replaces term frequency with log of term frequency,\n normalises bias against lengthy vs short docs)
+        -   sublinear_tf - True (replaces term frequency with log of term frequency, normalises bias against lengthy vs short docs)
         """)
 
         st.markdown('#')
@@ -482,7 +482,7 @@ def app():
          KNN (k-nearest neighbors) is a simple classification algorithm that does not depend on the structure of the data.
          It classifies a new example by measuring the distance between its k nearest n_neighbors.
          The distance between two examples can be the euclidean distance between their feature vectors.
-         The majority class among the k nearest neighbors is taken as the class for the new/given example.
+         The majority class among the k nearest neighbors is taken as the class for the new example.
          Lastly, KNN is another algorithm popular with text classification,
         [[source]](https://www.geeksforgeeks.org/multiclass-classification-using-scikit-learn/)
         [[source]](https://www.datacamp.com/community/tutorials/k-nearest-neighbor-classification-scikit-learn)\n
